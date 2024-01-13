@@ -1,16 +1,16 @@
 __all__ = ["writesnbttostream"]
 
 from io import BufferedIOBase
-from typing import Final, Iterator, List, Tuple, cast
+from typing import Iterator, List, Tuple, cast
 
 from .nbttag import NBTCompound, NBTList, NBTTag, NBTTagType
 
-EOF_REACH_MSG: Final[str] = "Stream reached EOF before the payload's end"
+EOF_REACH_MSG: str = "Stream reached EOF before the payload's end"
 
 def _format_name(name: str) -> bytes :
     if not name :
         return b'""'
-    RES: Final[List[bytes]] = []
+    RES: List[bytes] = []
     if name.strip("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                   "abcdefghijklmnopqrstuvwxyz_-.+") :
         name = '"' + name.replace("\\", r"\\").replace('"', r'\"') + '"'

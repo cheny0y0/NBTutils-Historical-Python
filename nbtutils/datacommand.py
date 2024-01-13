@@ -2,7 +2,7 @@ __all__ = ["DataOperationResult", "data"]
 
 import builtins
 from numbers import Integral, Real
-from typing import Dict, Final, Literal, NamedTuple, Optional, Tuple, Union, cast, overload
+from typing import Dict, NamedTuple, Optional, Tuple, Union, cast, overload
 from .nbttag import NBTByte, NBTByteArray, NBTCompound, NBTDouble, NBTFloat, \
                     NBTInt, NBTIntArray, NBTList, NBTLong, NBTLongArray, \
                     NBTShort, NBTString, NBTTagType, NBTTag
@@ -57,7 +57,7 @@ class DataOperationResult(NamedTuple) :
             if arg2 is None :
                 return cls(success=False, result=0, tag=None)
             elif isinstance(arg2, NBTTag) :
-                RESULT: Final[int] = arg1 % 0x100000000
+                RESULT: int = arg1 % 0x100000000
                 return cls(success=True,
                            result=RESULT if RESULT < 0x80000000 else \
                                   RESULT - 0x100000000, tag=arg2)
@@ -78,7 +78,7 @@ class data :
                 return DataOperationResult.of()
             return cls.get(cast(NBTCompound, tag.value)[path[0]],
                            cast(NBTPath, path[1:]), scale)
-        INDEX: Final[int] = cast(int, path[0])
+        INDEX: int = cast(int, path[0])
         if tag.type == NBTTagType.TAG_Byte_Array :
             if len(path) > 1 :
                 return DataOperationResult.of()
@@ -118,7 +118,7 @@ class data :
         if tag.type != NBTTagType.TAG_Compound or \
            another.type != NBTTagType.TAG_Compound :
             return DataOperationResult.of()
-        NEW: Final[NBTCompound] = NBTCompound(cast(NBTCompound, tag.value))
+        NEW: NBTCompound = NBTCompound(cast(NBTCompound, tag.value))
         NEW.update(cast(NBTCompound, another.value))
         return DataOperationResult.of(cast(Integral, 1), NBTTag(NEW))
 

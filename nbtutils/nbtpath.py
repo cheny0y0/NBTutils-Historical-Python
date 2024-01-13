@@ -1,6 +1,6 @@
 import builtins
 
-from typing import Final, Iterable, List, SupportsIndex, Tuple, Union
+from typing import Iterable, List, Tuple, Union
 
 class NBTPath(((len(""), repr(0))*2).__class__) :
     def __new__(cls, iterable: Iterable[Union[int, str]]=()) :
@@ -15,7 +15,7 @@ class NBTPath(((len(""), repr(0))*2).__class__) :
     def __str__(self) -> str :
         if self.isroot() :
             return "{}"
-        R: Final[List[str]] = []
+        R: List[str] = []
         for i in self :
             if isinstance(i, int) :
                 R.append(f"[{i}]")
@@ -31,7 +31,7 @@ class NBTPath(((len(""), repr(0))*2).__class__) :
     def isroot(self) -> bool :
         return not self
 
-    def __getitem__(self, key: Union[SupportsIndex, slice]) :
-        R: Final[Union[int, str, Tuple[Union[int, str], ...]]] = \
+    def __getitem__(self, key: Union[int, slice]) :
+        R: Union[int, str, Tuple[Union[int, str], ...]] = \
         super().__getitem__(key)
         return R if isinstance(R, (int, str)) else type(self)(R)

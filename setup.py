@@ -2,10 +2,8 @@ import logging
 import sys
 from setuptools import find_packages, setup
 
-if sys.version_info < (3, 8) :
-    raise SystemError("Python 3.8 or later required")
-elif sys.version_info > (3, 13) :
-    logging.warning("Not tested on later version of Python 3.13.")
+if sys.version_info < (3, 7) or sys.version_info > (3, 7) :
+    raise SystemError("Python 3.7.x required")
 
 setup(
     name = "nbtutils",
